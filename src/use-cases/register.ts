@@ -1,5 +1,5 @@
 import { hash } from 'bcryptjs'
-import type { UsersRepository } from '../repositores/users-repository'
+import { UsersRepository } from '../repositores/users-repository'
 import { Conflit } from '../errors/conflit'
 
 interface RegisterUserParams {
