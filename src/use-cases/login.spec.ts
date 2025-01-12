@@ -22,8 +22,8 @@ describe('LoginUseCase com InMemoryUsersRepository', () => {
       password: 'senha_correta',
     })
 
-    expect(token).toBeTypeOf('string')
-    expect(token.length).toBeGreaterThan(0)
+    expect(token.token).toBeTypeOf('string')
+    expect(token.token.length).toBeGreaterThan(0)
   })
 
   it('deve lançar NotFound se o usuário não for encontrado', async () => {

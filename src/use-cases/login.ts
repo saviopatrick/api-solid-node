@@ -10,9 +10,23 @@ interface LoginUseCaseProps {
   password: string
 }
 
+interface SafeUser {
+  id: string
+  name: string
+  email: string
+}
+
+interface LoginUseCaseResponse {
+  user: SafeUser
+  token: string
+}
+
 export class LoginUseCase {
   constructor(private usersRepositorys: UsersRepository) {}
-  async execute({ email, password }: LoginUseCaseProps) {
+  async execute({
+    email,
+    password,
+  }: LoginUseCaseProps): Promise<LoginUseCaseResponse> {
     const account = await this.usersRepositorys.findByEmail(email)
     if (!account) {
       throw new NotFound('NotFound')
@@ -24,7 +38,10 @@ export class LoginUseCase {
     }
 
     const token = jwt.sign({ id: account.id }, env.SECRET_KEY)
-
-    return token
+    const { id, name, email: userEmail } = account
+    return {
+      user: { id, name, email: userEmail },
+      token,
+    }
   }
 }
